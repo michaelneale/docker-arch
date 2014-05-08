@@ -71,11 +71,14 @@ SYSD=/usr/lib/systemd/system
 ln -sf $SYSD/systemd-journald.socket $SYSD/sockets.target.wants/
 ln -sf $SYSD/systemd-journald.service $SYSD/sysinit.target.wants/
 
+echo "Compressing filesystem..."
 UNTEST=arch-rootfs-untested.tar.xz
 tar --xz -f $UNTEST --numeric-owner -C $ROOTFS -c .
 rm -rf $ROOTFS
 
+echo "Testing filesystem..."
 cat $UNTEST | docker import - archtest:${DATE}
 docker run -ti --rm archtest:${DATE} echo Success.
 
+echo "Approving filesystem..."
 mv $UNTEST arch-rootfs-${DATE}.tar.xz
