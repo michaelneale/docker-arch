@@ -79,6 +79,7 @@ rm -rf $ROOTFS
 echo "Testing filesystem..."
 cat $UNTEST | docker import - archtest:${DATE}
 docker run -ti --rm archtest:${DATE} echo Success.
+docker rmi archtest:${DATE}
 
 echo "Approving filesystem..."
 mv $UNTEST arch-rootfs-${DATE}.tar.xz
