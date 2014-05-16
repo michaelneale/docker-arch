@@ -2,7 +2,7 @@ FROM scratch
 MAINTAINER Josh VanderLinden <codekoala@gmail.com>
 
 ENV container docker
-ADD arch-rootfs-2014.05.09.tar.xz /
+ADD arch-rootfs-2014.05.16.tar.xz /
 
 CMD ["/usr/bin/init"]
 
