@@ -17,6 +17,7 @@ DATE=$1
 
 echo Building Arch Linux container for ${DATE}...
 
+INSTARCH_KEY=051680AC
 ROOTFS=$(mktemp -d /tmp/rootfs-archlinux-XXXXXXXXXX)
 chmod 755 $ROOTFS
 
@@ -39,6 +40,7 @@ expect <<EOF
 EOF
 
 arch-chroot $ROOTFS /bin/sh -c "haveged -w 1024; pacman-key --init; pkill haveged; pacman -Rs --noconfirm haveged; pacman-key --populate archlinux"
+arch-chroot $ROOTFS /bin/sh -c "pacman-key -r ${INSTARCH_KEY} && pacman-key --lsign-key ${INSTARCH_KEY}"
 arch-chroot $ROOTFS /bin/sh -c "ln -s /usr/share/zoneinfo/UTC /etc/localtime"
 echo 'en_US.UTF-8 UTF-8' > $ROOTFS/etc/locale.gen
 arch-chroot $ROOTFS locale-gen
